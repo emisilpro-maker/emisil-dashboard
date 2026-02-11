@@ -352,120 +352,518 @@ tr:hover td{background:rgba(255,255,255,.02)}
 // EMBEDDED DATA
 // ═══════════════════════════════════════════════════════════════
 const ga4 = {
-  overview: {"sessions":13426,"users":11453,"pageviews":51268,"bounceRate":0.263369581409206},
-  daily: [
-    {"date":"20260204","sessions":1911,"users":1688,"pageviews":7091,"bounceRate":0.2889},
-    {"date":"20260205","sessions":1867,"users":1666,"pageviews":6864,"bounceRate":0.2716},
-    {"date":"20260206","sessions":1936,"users":1692,"pageviews":7852,"bounceRate":0.2701},
-    {"date":"20260207","sessions":1850,"users":1642,"pageviews":6337,"bounceRate":0.2832},
-    {"date":"20260208","sessions":1829,"users":1625,"pageviews":6481,"bounceRate":0.2455},
-    {"date":"20260209","sessions":1843,"users":1568,"pageviews":6880,"bounceRate":0.2393},
-    {"date":"20260210","sessions":1817,"users":1615,"pageviews":7827,"bounceRate":0.2625},
-    {"date":"20260211","sessions":524,"users":487,"pageviews":1936,"bounceRate":0.2920}
+  "overview": {
+    "sessions": 14753,
+    "users": 12357,
+    "pageviews": 56832,
+    "bounceRate": 0.2748593506405477
+  },
+  "daily": [
+    {
+      "date": "20260203",
+      "sessions": 1747,
+      "users": 1535,
+      "pageviews": 7500,
+      "bounceRate": 0.2552947910704064
+    },
+    {
+      "date": "20260204",
+      "sessions": 1911,
+      "users": 1688,
+      "pageviews": 7091,
+      "bounceRate": 0.28885400313971743
+    },
+    {
+      "date": "20260205",
+      "sessions": 1867,
+      "users": 1666,
+      "pageviews": 6864,
+      "bounceRate": 0.2715586502410284
+    },
+    {
+      "date": "20260206",
+      "sessions": 1936,
+      "users": 1692,
+      "pageviews": 7852,
+      "bounceRate": 0.27014462809917356
+    },
+    {
+      "date": "20260207",
+      "sessions": 1850,
+      "users": 1642,
+      "pageviews": 6337,
+      "bounceRate": 0.28324324324324324
+    },
+    {
+      "date": "20260208",
+      "sessions": 1829,
+      "users": 1625,
+      "pageviews": 6481,
+      "bounceRate": 0.245489338436304
+    },
+    {
+      "date": "20260209",
+      "sessions": 1843,
+      "users": 1568,
+      "pageviews": 6880,
+      "bounceRate": 0.23928377645143786
+    },
+    {
+      "date": "20260210",
+      "sessions": 1819,
+      "users": 1591,
+      "pageviews": 7827,
+      "bounceRate": 0.2594832325453546
+    }
   ],
-  topPages: [
-    {"pagePath":"/","pageviews":5277,"sessions":4165,"users":3648,"bounceRate":0.1236},
-    {"pagePath":"/collections/ftm-pack-and-play","pageviews":3704,"sessions":2697,"users":2429,"bounceRate":0.0430},
-    {"pagePath":"/products/ftm-stp-3-in-1-stand-to-pee-device-2nd-gen","pageviews":2724,"sessions":771,"users":635,"bounceRate":0.1012},
-    {"pagePath":"/collections/ftm-packers","pageviews":2592,"sessions":1937,"users":1784,"bounceRate":0.0723},
-    {"pagePath":"/collections/ftm-stp","pageviews":2323,"sessions":1727,"users":1560,"bounceRate":0.0463},
-    {"pagePath":"/products/ftm-pack-and-play-ftm-packer-er04","pageviews":2240,"sessions":680,"users":574,"bounceRate":0.0794},
-    {"pagePath":"/products/emisil-er01-anatomical-pack-and-play-model","pageviews":1495,"sessions":616,"users":573,"bounceRate":0.0649},
-    {"pagePath":"/products/ftm-packer-trans-fl02","pageviews":1378,"sessions":496,"users":397,"bounceRate":0.1290},
-    {"pagePath":"/products/ftm-pack-and-play-er05","pageviews":1283,"sessions":459,"users":399,"bounceRate":0.0588},
-    {"pagePath":"/products/ftm-pack-and-play-packer-er03","pageviews":1237,"sessions":473,"users":409,"bounceRate":0.0867}
+  "topPages": [
+    {
+      "pagePath": "/",
+      "pageviews": 5936,
+      "sessions": 4679,
+      "users": 4118,
+      "bounceRate": 0.12203462278264586
+    },
+    {
+      "pagePath": "/collections/ftm-pack-and-play",
+      "pageviews": 4280,
+      "sessions": 3061,
+      "users": 2771,
+      "bounceRate": 0.042143090493302844
+    },
+    {
+      "pagePath": "/products/ftm-stp-3-in-1-stand-to-pee-device-2nd-gen",
+      "pageviews": 2903,
+      "sessions": 844,
+      "users": 692,
+      "bounceRate": 0.10781990521327015
+    },
+    {
+      "pagePath": "/collections/ftm-packers",
+      "pageviews": 2883,
+      "sessions": 2186,
+      "users": 2010,
+      "bounceRate": 0.0727355901189387
+    },
+    {
+      "pagePath": "/collections/ftm-stp",
+      "pageviews": 2558,
+      "sessions": 1934,
+      "users": 1741,
+      "bounceRate": 0.04653567735263702
+    },
+    {
+      "pagePath": "/products/ftm-pack-and-play-ftm-packer-er04",
+      "pageviews": 2382,
+      "sessions": 780,
+      "users": 657,
+      "bounceRate": 0.06794871794871794
+    },
+    {
+      "pagePath": "/products/emisil-er01-anatomical-pack-and-play-model",
+      "pageviews": 1688,
+      "sessions": 681,
+      "users": 636,
+      "bounceRate": 0.06754772393538913
+    },
+    {
+      "pagePath": "/products/ftm-pack-and-play-er05",
+      "pageviews": 1580,
+      "sessions": 526,
+      "users": 464,
+      "bounceRate": 0.053231939163498096
+    },
+    {
+      "pagePath": "/products/stp-packer-3rd-generation",
+      "pageviews": 1472,
+      "sessions": 518,
+      "users": 466,
+      "bounceRate": 0.07528957528957529
+    },
+    {
+      "pagePath": "/products/ftm-pack-and-play-packer-er03",
+      "pageviews": 1458,
+      "sessions": 511,
+      "users": 440,
+      "bounceRate": 0.0821917808219178
+    }
   ]
 };
 
 const ga4Prev = {
-  overview: {"sessions":12169,"users":10583,"pageviews":47127,"bounceRate":0.27274221382200675},
-  daily: [
-    {"date":"20260128","sessions":1782},{"date":"20260129","sessions":1573},
-    {"date":"20260130","sessions":1682},{"date":"20260131","sessions":1605},
-    {"date":"20260201","sessions":1770},{"date":"20260202","sessions":2036},
-    {"date":"20260203","sessions":1747}
+  "overview": {
+    "sessions": 11813,
+    "users": 10591,
+    "pageviews": 45613,
+    "bounceRate": 0.26563954964869213
+  },
+  "daily": [
+    {
+      "date": "20260127",
+      "sessions": 1621
+    },
+    {
+      "date": "20260128",
+      "sessions": 1782
+    },
+    {
+      "date": "20260129",
+      "sessions": 1573
+    },
+    {
+      "date": "20260130",
+      "sessions": 1682
+    },
+    {
+      "date": "20260131",
+      "sessions": 1605
+    },
+    {
+      "date": "20260201",
+      "sessions": 1770
+    },
+    {
+      "date": "20260202",
+      "sessions": 2036
+    }
   ],
-  topPages: [
-    {"pagePath":"/","pageviews":5260},
-    {"pagePath":"/collections/ftm-pack-and-play","pageviews":3674},
-    {"pagePath":"/collections/ftm-packers","pageviews":3074},
-    {"pagePath":"/collections/ftm-stp","pageviews":2152},
-    {"pagePath":"/products/ftm-stp-3-in-1-stand-to-pee-device-2nd-gen","pageviews":2119},
-    {"pagePath":"/products/ftm-pack-and-play-ftm-packer-er04","pageviews":1821},
-    {"pagePath":"/products/ftm-pack-and-play-er05","pageviews":1570},
-    {"pagePath":"/products/emisil-er01-anatomical-pack-and-play-model","pageviews":1391},
-    {"pagePath":"/products/ftm-packer-trans-fl02","pageviews":1316},
-    {"pagePath":"/products/ftm-pack-and-play-packer-er03","pageviews":1263}
+  "topPages": [
+    {
+      "pagePath": "/",
+      "pageviews": 5168
+    },
+    {
+      "pagePath": "/collections/ftm-pack-and-play",
+      "pageviews": 3405
+    },
+    {
+      "pagePath": "/collections/ftm-packers",
+      "pageviews": 3111
+    },
+    {
+      "pagePath": "/products/ftm-stp-3-in-1-stand-to-pee-device-2nd-gen",
+      "pageviews": 2085
+    },
+    {
+      "pagePath": "/collections/ftm-stp",
+      "pageviews": 2028
+    },
+    {
+      "pagePath": "/products/ftm-pack-and-play-ftm-packer-er04",
+      "pageviews": 1667
+    },
+    {
+      "pagePath": "/products/ftm-packer-trans-fl02",
+      "pageviews": 1425
+    },
+    {
+      "pagePath": "/products/ftm-pack-and-play-er05",
+      "pageviews": 1408
+    },
+    {
+      "pagePath": "/products/emisil-er01-anatomical-pack-and-play-model",
+      "pageviews": 1300
+    },
+    {
+      "pagePath": "/products/ftm-pack-and-play-packer-er03",
+      "pageviews": 1197
+    }
   ]
 };
 
 const shopify = {
-  summary: {"totalOrders":36,"totalRevenue":14032.63,"averageOrderValue":389.79,"paidOrders":35,"pendingOrders":1},
-  revenueByDay: [
-    {"date":"2026-02-04","orders":9,"revenue":4053.75},
-    {"date":"2026-02-05","orders":7,"revenue":2670.00},
-    {"date":"2026-02-06","orders":5,"revenue":1558.16},
-    {"date":"2026-02-07","orders":3,"revenue":833.47},
-    {"date":"2026-02-08","orders":3,"revenue":1622.77},
-    {"date":"2026-02-09","orders":3,"revenue":1178.07},
-    {"date":"2026-02-10","orders":4,"revenue":1109.91},
-    {"date":"2026-02-11","orders":2,"revenue":1006.50}
+  "summary": {
+    "totalOrders": 41,
+    "totalRevenue": 15919.2,
+    "averageOrderValue": 388.27,
+    "paidOrders": 40,
+    "pendingOrders": 1
+  },
+  "revenueByDay": [
+    {
+      "date": "2026-02-03",
+      "orders": 6,
+      "revenue": 2475.9
+    },
+    {
+      "date": "2026-02-04",
+      "orders": 6,
+      "revenue": 2865.06
+    },
+    {
+      "date": "2026-02-05",
+      "orders": 11,
+      "revenue": 4275.86
+    },
+    {
+      "date": "2026-02-06",
+      "orders": 5,
+      "revenue": 1558.16
+    },
+    {
+      "date": "2026-02-07",
+      "orders": 3,
+      "revenue": 833.47
+    },
+    {
+      "date": "2026-02-08",
+      "orders": 3,
+      "revenue": 1622.77
+    },
+    {
+      "date": "2026-02-09",
+      "orders": 3,
+      "revenue": 1178.07
+    },
+    {
+      "date": "2026-02-10",
+      "orders": 4,
+      "revenue": 1109.91
+    }
   ],
-  topProducts: [
-    {"product":"3-in-1 STP Model (1st Gen)","units":4,"revenue":1682},
-    {"product":"ER04 | Versatile Pack & Play","units":4,"revenue":1495},
-    {"product":"ER07 | Large Pack & Play","units":2,"revenue":1125},
-    {"product":"ER06 | Large Pack & Play","units":2,"revenue":990},
-    {"product":"ER05 | Bold Hyper-Realistic P&P","units":2,"revenue":905},
-    {"product":"ER02 | Realistic Pack & Play","units":2,"revenue":890},
-    {"product":"Complete Anatomical System","units":2,"revenue":890},
-    {"product":"3-in-1 STP Packer (2nd Gen)","units":2,"revenue":841},
-    {"product":"ER01 | Realistic Anatomical P&P","units":1,"revenue":630},
-    {"product":"ER03 | Large Pack & Play","units":1,"revenue":535}
+  "topProducts": [
+    {
+      "product": "3-in-1 STP Model | Realistic Pack, Pee & Play",
+      "units": 6,
+      "revenue": 2931
+    },
+    {
+      "product": "ER04 | Versatile FTM P&P Model",
+      "units": 4,
+      "revenue": 1584
+    },
+    {
+      "product": "ER05 | Bold Hyper-Realistic P&P Model",
+      "units": 3,
+      "revenue": 1534
+    },
+    {
+      "product": "ER07 | Large Realistic FTM P&P Model",
+      "units": 2,
+      "revenue": 1370
+    },
+    {
+      "product": "ER12 | Large Realistic FTM P&P Model",
+      "units": 2,
+      "revenue": 1109
+    },
+    {
+      "product": "ER01 | Realistic Anatomical P&P Model",
+      "units": 2,
+      "revenue": 1097
+    },
+    {
+      "product": "ER06 | Large Realistic FTM P&P Model",
+      "units": 2,
+      "revenue": 1014
+    },
+    {
+      "product": "ER02 | Realistic FTM P&P Model",
+      "units": 2,
+      "revenue": 999
+    },
+    {
+      "product": "Complete Anatomical System 1-2-3 | Realistic System",
+      "units": 2,
+      "revenue": 908
+    },
+    {
+      "product": "Long 3-in-1 STP Model | Realistic FTM Silicone model",
+      "units": 2,
+      "revenue": 834
+    }
   ],
-  countries: [
-    {"country":"US","orders":12,"share":33.3},
-    {"country":"DE","orders":5,"share":13.9},
-    {"country":"GB","orders":4,"share":11.1},
-    {"country":"AU","orders":3,"share":8.3},
-    {"country":"UA","orders":2,"share":5.6},
-    {"country":"ES","orders":2,"share":5.6},
-    {"country":"Other (8)","orders":8,"share":22.2}
+  "countries": [
+    {
+      "country": "US",
+      "orders": 14,
+      "share": 34.1
+    },
+    {
+      "country": "DE",
+      "orders": 5,
+      "share": 12.2
+    },
+    {
+      "country": "GB",
+      "orders": 5,
+      "share": 12.2
+    },
+    {
+      "country": "ES",
+      "orders": 2,
+      "share": 4.9
+    },
+    {
+      "country": "AU",
+      "orders": 2,
+      "share": 4.9
+    },
+    {
+      "country": "CA",
+      "orders": 2,
+      "share": 4.9
+    },
+    {
+      "country": "Other (11)",
+      "orders": 11,
+      "share": 26.8
+    }
   ]
 };
 
-const shopifyPrev = {
-  summary: {"totalOrders":23,"totalRevenue":10219.68,"averageOrderValue":444.33}
-};
+const shopifyPrev = {"summary":{"totalOrders":20,"totalRevenue":9167.35,"averageOrderValue":458.37}};
 
 const gsc = {
-  totals: {"clicks":620,"impressions":4268},
-  keywords: [
-    {"keyword":"emisil","clicks":280,"impressions":371,"ctr":75.47,"position":1.01},
-    {"keyword":"emisil prosthetics","clicks":45,"impressions":64,"ctr":70.31,"position":1.00},
-    {"keyword":"ftm packer","clicks":37,"impressions":840,"ctr":4.40,"position":7.88},
-    {"keyword":"ftm stp","clicks":28,"impressions":122,"ctr":22.95,"position":7.11},
-    {"keyword":"prosthetic penis","clicks":21,"impressions":654,"ctr":3.21,"position":6.57},
-    {"keyword":"emisil stp","clicks":18,"impressions":21,"ctr":85.71,"position":1.00},
-    {"keyword":"ftm sex toys","clicks":18,"impressions":177,"ctr":10.17,"position":5.42},
-    {"keyword":"packer ftm","clicks":17,"impressions":226,"ctr":7.52,"position":9.09},
-    {"keyword":"ftm bottom growth","clicks":16,"impressions":378,"ctr":4.23,"position":3.63},
-    {"keyword":"ftm prosthetic","clicks":14,"impressions":78,"ctr":17.95,"position":4.32},
-    {"keyword":"pack and play ftm","clicks":14,"impressions":95,"ctr":14.74,"position":5.55},
-    {"keyword":"ftm pack and play","clicks":13,"impressions":156,"ctr":8.33,"position":7.05},
-    {"keyword":"ftm packers","clicks":12,"impressions":206,"ctr":5.83,"position":10.78},
-    {"keyword":"t dick","clicks":12,"impressions":470,"ctr":2.55,"position":5.37},
-    {"keyword":"prosthetic penis ftm","clicks":10,"impressions":29,"ctr":34.48,"position":3.90},
-    {"keyword":"stp ftm","clicks":10,"impressions":61,"ctr":16.39,"position":4.28},
-    {"keyword":"ftm bottom growth stages","clicks":9,"impressions":88,"ctr":10.23,"position":2.24},
-    {"keyword":"ftm prosthesis","clicks":9,"impressions":35,"ctr":25.71,"position":6.09},
-    {"keyword":"packers ftm","clicks":9,"impressions":119,"ctr":7.56,"position":6.50},
-    {"keyword":"emisil packer","clicks":8,"impressions":8,"ctr":100.00,"position":1.00}
+  "totals": {
+    "clicks": 946,
+    "impressions": 6980
+  },
+  "keywords": [
+    {
+      "keyword": "emisil",
+      "clicks": 445,
+      "impressions": 594,
+      "ctr": 74.92,
+      "position": 1.01
+    },
+    {
+      "keyword": "emisil prosthetics",
+      "clicks": 75,
+      "impressions": 100,
+      "ctr": 75,
+      "position": 1
+    },
+    {
+      "keyword": "ftm packer",
+      "clicks": 55,
+      "impressions": 1282,
+      "ctr": 4.29,
+      "position": 8.14
+    },
+    {
+      "keyword": "ftm stp",
+      "clicks": 37,
+      "impressions": 182,
+      "ctr": 20.33,
+      "position": 7.77
+    },
+    {
+      "keyword": "prosthetic penis",
+      "clicks": 36,
+      "impressions": 1029,
+      "ctr": 3.5,
+      "position": 6.56
+    },
+    {
+      "keyword": "packer ftm",
+      "clicks": 34,
+      "impressions": 390,
+      "ctr": 8.72,
+      "position": 10.22
+    },
+    {
+      "keyword": "ftm sex toys",
+      "clicks": 33,
+      "impressions": 304,
+      "ctr": 10.86,
+      "position": 5.34
+    },
+    {
+      "keyword": "emisil stp",
+      "clicks": 29,
+      "impressions": 35,
+      "ctr": 82.86,
+      "position": 1
+    },
+    {
+      "keyword": "ftm bottom growth",
+      "clicks": 24,
+      "impressions": 604,
+      "ctr": 3.97,
+      "position": 3.75
+    },
+    {
+      "keyword": "pack and play ftm",
+      "clicks": 24,
+      "impressions": 139,
+      "ctr": 17.27,
+      "position": 5.48
+    },
+    {
+      "keyword": "ftm prosthetic",
+      "clicks": 23,
+      "impressions": 131,
+      "ctr": 17.56,
+      "position": 4.47
+    },
+    {
+      "keyword": "ftm bottom growth stages",
+      "clicks": 19,
+      "impressions": 138,
+      "ctr": 13.77,
+      "position": 2.19
+    },
+    {
+      "keyword": "t dick",
+      "clicks": 19,
+      "impressions": 777,
+      "ctr": 2.45,
+      "position": 5.26
+    },
+    {
+      "keyword": "ftm packers",
+      "clicks": 18,
+      "impressions": 366,
+      "ctr": 4.92,
+      "position": 10.25
+    },
+    {
+      "keyword": "ftm pack and play",
+      "clicks": 14,
+      "impressions": 256,
+      "ctr": 5.47,
+      "position": 7.92
+    },
+    {
+      "keyword": "packer trans",
+      "clicks": 14,
+      "impressions": 421,
+      "ctr": 3.33,
+      "position": 10.31
+    },
+    {
+      "keyword": "emisil packer",
+      "clicks": 13,
+      "impressions": 14,
+      "ctr": 92.86,
+      "position": 1
+    },
+    {
+      "keyword": "prosthetic penis ftm",
+      "clicks": 12,
+      "impressions": 37,
+      "ctr": 32.43,
+      "position": 3.3
+    },
+    {
+      "keyword": "ftm prosthesis",
+      "clicks": 11,
+      "impressions": 44,
+      "ctr": 25,
+      "position": 5.07
+    },
+    {
+      "keyword": "ftm prosthetics",
+      "clicks": 11,
+      "impressions": 137,
+      "ctr": 8.03,
+      "position": 6.61
+    }
   ]
 };
 
-const gscPrev = {totals:{"clicks":837,"impressions":6194}};
-
+const gscPrev = {"totals":{"clicks":713,"impressions":5343}};
 // ═══════════════════════════════════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════════════════════════════════
