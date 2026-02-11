@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emisil Nerve Center</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:     #0f1117;
+  --card:   #1a1d27;
+  --border: #2a2d3a;
+  --text:   #e1e4ed;
+  --muted:  #8b8fa3;
+  --accent-blue:   #6366f1;
+  --accent-green:  #22c55e;
+  --accent-orange: #f59e0b;
+  --accent-red:    #ef4444;
+  --accent-cyan:   #06b6d4;
+  --accent-purple: #a855f7;
+  --up:     #22c55e;
+  --down:   #ef4444;
+  --radius: 12px;
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.5;
+  min-height:100vh;padding:16px;
+}
+a{color:var(--accent-blue);text-decoration:none}
+
+/* ── HEADER ── */
+.header{
+  text-align:center;padding:24px 0 8px;margin-bottom:24px;
+}
+.header h1{
+  font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700;
+  background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.header .sub{color:var(--muted);font-size:.85rem;margin-top:4px}
+.header .period{
+  display:inline-block;margin-top:8px;padding:4px 14px;
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  font-size:.8rem;color:var(--muted);
+}
+
+/* ── SECTION TITLES ── */
+.section-title{
+  display:flex;align-items:center;gap:10px;
+  margin:32px 0 16px;font-size:1.1rem;font-weight:600;
+}
+.section-title .dot{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0;
+}
+.section-title .tag{
+  margin-left:auto;font-size:.7rem;font-weight:400;
+  padding:2px 10px;border-radius:10px;color:var(--muted);
+  border:1px solid var(--border);
+}
+
+/* ── KPI CARDS GRID ── */
+.kpi-grid{
+  display:grid;gap:12px;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+}
+.kpi{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;position:relative;overflow:hidden;
+}
+.kpi .label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.kpi .value{font-size:1.6rem;font-weight:700;margin:4px 0 2px}
+.kpi .delta{font-size:.78rem;font-weight:500}
+.kpi .delta.up{color:var(--up)}
+.kpi .delta.down{color:var(--down)}
+.kpi .delta.neutral{color:var(--muted)}
+.kpi .spark{position:absolute;bottom:0;right:0;width:80px;height:36px;opacity:.5}
+.kpi::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+}
+.kpi.blue::before{background:var(--accent-blue)}
+.kpi.green::before{background:var(--accent-green)}
+.kpi.orange::before{background:var(--accent-orange)}
+.kpi.cyan::before{background:var(--accent-cyan)}
+.kpi.purple::before{background:var(--accent-purple)}
+.kpi.red::before{background:var(--accent-red)}
+
+/* ── CHARTS ── */
+.chart-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;margin-bottom:12px;
+}
+.chart-card h3{font-size:.85rem;color:var(--muted);margin-bottom:12px;font-weight:500}
+.chart-wrap{position:relative;width:100%;max-height:300px}
+.chart-row{
+  display:grid;gap:12px;
+  grid-template-columns:1fr;
+}
+@media(min-width:768px){
+  .chart-row{grid-template-columns:1fr 1fr}
+  .chart-row.triple{grid-template-columns:1fr 1fr 1fr}
+}
+
+/* ── TABLES ── */
+.table-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;overflow-x:auto;margin-bottom:12px;
+}
+.table-card h3{font-size:.85rem;color:var(--muted);margin-bottom:12px;font-weight:500}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th{
+  text-align:left;padding:8px 10px;color:var(--muted);font-weight:500;
+  border-bottom:1px solid var(--border);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.5px;white-space:nowrap;
+}
+td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pos-badge{
+  display:inline-block;padding:2px 8px;border-radius:6px;font-size:.72rem;font-weight:600;
+  min-width:36px;text-align:center;
+}
+.pos-1{background:rgba(34,197,94,.15);color:#22c55e}
+.pos-top5{background:rgba(99,102,241,.15);color:#818cf8}
+.pos-top10{background:rgba(245,158,11,.15);color:#f59e0b}
+.pos-low{background:rgba(239,68,68,.1);color:#f87171}
+
+/* ── BAR INDICATORS ── */
+.bar-bg{
+  background:rgba(255,255,255,.06);border-radius:4px;height:6px;width:100%;position:relative;
+}
+.bar-fill{height:100%;border-radius:4px;transition:width .3s}
+.bar-fill.blue{background:var(--accent-blue)}
+.bar-fill.green{background:var(--accent-green)}
+.bar-fill.orange{background:var(--accent-orange)}
+
+/* ── PAGE PATH ── */
+.page-path{
+  font-family:'SF Mono',SFMono-Regular,Consolas,monospace;
+  font-size:.75rem;color:var(--accent-cyan);max-width:280px;
+  overflow:hidden;text-overflow:ellipsis;
+}
+
+/* ── FOOTER ── */
+.footer{
+  text-align:center;padding:32px 0 16px;color:var(--muted);font-size:.75rem;
+}
+
+/* ── WOW SUMMARY BAR ── */
+.wow-bar{
+  display:grid;gap:8px;margin-bottom:24px;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+}
+.wow-item{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:10px 12px;text-align:center;
+}
+.wow-item .metric{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
+.wow-item .val{font-size:1.1rem;font-weight:700;margin:2px 0}
+.wow-item .chg{font-size:.72rem;font-weight:600}
+.wow-item .chg.up{color:var(--up)}.wow-item .chg.down{color:var(--down)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:480px){
+  body{padding:10px}
+  .kpi .value{font-size:1.3rem}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .wow-bar{grid-template-columns:repeat(2,1fr)}
+  table{font-size:.75rem}
+  td,th{padding:6px 6px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Emisil Nerve Center</h1>
+  <div class="sub">Weekly Performance Dashboard</div>
+  <div class="period">Feb 4 &ndash; Feb 11, 2026 &nbsp;&middot;&nbsp; Updated Feb 11</div>
+</div>
+
+<!-- ════════════════════════ WOW SUMMARY ════════════════════════ -->
+<div class="wow-bar" id="wowBar"></div>
+
+<!-- ════════════════════════ GA4 ════════════════════════ -->
+<div class="section-title">
+  <span class="dot" style="background:var(--accent-blue)"></span>
+  Google Analytics
+  <span class="tag">GA4 Property 298001572</span>
+</div>
+
+<div class="kpi-grid" id="ga4Kpis"></div>
+
+<div class="chart-row" style="margin-top:12px">
+  <div class="chart-card">
+    <h3>Sessions &amp; Users (Daily)</h3>
+    <div class="chart-wrap"><canvas id="ga4DailyChart"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <h3>Pageviews &amp; Bounce Rate (Daily)</h3>
+    <div class="chart-wrap"><canvas id="ga4PvBounceChart"></canvas></div>
+  </div>
+</div>
+
+<div class="table-card">
+  <h3>Top 10 Pages by Pageviews</h3>
+  <table id="topPagesTable"></table>
+</div>
+
+<!-- ════════════════════════ SHOPIFY ════════════════════════ -->
+<div class="section-title">
+  <span class="dot" style="background:var(--accent-green)"></span>
+  Shopify
+  <span class="tag">emisil.com</span>
+</div>
+
+<div class="kpi-grid" id="shopifyKpis"></div>
+
+<div class="chart-row" style="margin-top:12px">
+  <div class="chart-card">
+    <h3>Revenue by Day</h3>
+    <div class="chart-wrap"><canvas id="shopifyRevenueChart"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <h3>Orders by Country</h3>
+    <div class="chart-wrap"><canvas id="shopifyCountryChart"></canvas></div>
+  </div>
+</div>
+
+<div class="table-card">
+  <h3>Top 10 Products by Revenue</h3>
+  <table id="topProductsTable"></table>
+</div>
+
+<!-- ════════════════════════ GSC ════════════════════════ -->
+<div class="section-title">
+  <span class="dot" style="background:var(--accent-orange)"></span>
+  Google Search Console
+  <span class="tag">sc-domain:emisil.com</span>
+</div>
+
+<div class="kpi-grid" id="gscKpis"></div>
+
+<div class="chart-row" style="margin-top:12px">
+  <div class="chart-card">
+    <h3>Top Keywords &mdash; Clicks vs Impressions</h3>
+    <div class="chart-wrap"><canvas id="gscKeywordsChart"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <h3>Keyword Positions</h3>
+    <div class="chart-wrap"><canvas id="gscPositionChart"></canvas></div>
+  </div>
+</div>
+
+<div class="table-card">
+  <h3>Top 20 Keywords</h3>
+  <table id="gscTable"></table>
+</div>
+
+<div class="footer">
+  Emisil Nerve Center &middot; Data sources: GA4, Shopify, Google Search Console &middot; Auto-generated
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// EMBEDDED DATA
+// ═══════════════════════════════════════════════════════════════
+const ga4 = {
+  overview: {"sessions":13426,"users":11453,"pageviews":51268,"bounceRate":0.263369581409206},
+  daily: [
+    {"date":"20260204","sessions":1911,"users":1688,"pageviews":7091,"bounceRate":0.2889},
+    {"date":"20260205","sessions":1867,"users":1666,"pageviews":6864,"bounceRate":0.2716},
+    {"date":"20260206","sessions":1936,"users":1692,"pageviews":7852,"bounceRate":0.2701},
+    {"date":"20260207","sessions":1850,"users":1642,"pageviews":6337,"bounceRate":0.2832},
+    {"date":"20260208","sessions":1829,"users":1625,"pageviews":6481,"bounceRate":0.2455},
+    {"date":"20260209","sessions":1843,"users":1568,"pageviews":6880,"bounceRate":0.2393},
+    {"date":"20260210","sessions":1817,"users":1615,"pageviews":7827,"bounceRate":0.2625},
+    {"date":"20260211","sessions":524,"users":487,"pageviews":1936,"bounceRate":0.2920}
+  ],
+  topPages: [
+    {"pagePath":"/","pageviews":5277,"sessions":4165,"users":3648,"bounceRate":0.1236},
+    {"pagePath":"/collections/ftm-pack-and-play","pageviews":3704,"sessions":2697,"users":2429,"bounceRate":0.0430},
+    {"pagePath":"/products/ftm-stp-3-in-1-stand-to-pee-device-2nd-gen","pageviews":2724,"sessions":771,"users":635,"bounceRate":0.1012},
+    {"pagePath":"/collections/ftm-packers","pageviews":2592,"sessions":1937,"users":1784,"bounceRate":0.0723},
+    {"pagePath":"/collections/ftm-stp","pageviews":2323,"sessions":1727,"users":1560,"bounceRate":0.0463},
+    {"pagePath":"/products/ftm-pack-and-play-ftm-packer-er04","pageviews":2240,"sessions":680,"users":574,"bounceRate":0.0794},
+    {"pagePath":"/products/emisil-er01-anatomical-pack-and-play-model","pageviews":1495,"sessions":616,"users":573,"bounceRate":0.0649},
+    {"pagePath":"/products/ftm-packer-trans-fl02","pageviews":1378,"sessions":496,"users":397,"bounceRate":0.1290},
+    {"pagePath":"/products/ftm-pack-and-play-er05","pageviews":1283,"sessions":459,"users":399,"bounceRate":0.0588},
+    {"pagePath":"/products/ftm-pack-and-play-packer-er03","pageviews":1237,"sessions":473,"users":409,"bounceRate":0.0867}
+  ]
+};
+
+const ga4Prev = {
+  overview: {"sessions":12169,"users":10583,"pageviews":47127,"bounceRate":0.27274221382200675},
+  daily: [
+    {"date":"20260128","sessions":1782},{"date":"20260129","sessions":1573},
+    {"date":"20260130","sessions":1682},{"date":"20260131","sessions":1605},
+    {"date":"20260201","sessions":1770},{"date":"20260202","sessions":2036},
+    {"date":"20260203","sessions":1747}
+  ],
+  topPages: [
+    {"pagePath":"/","pageviews":5260},
+    {"pagePath":"/collections/ftm-pack-and-play","pageviews":3674},
+    {"pagePath":"/collections/ftm-packers","pageviews":3074},
+    {"pagePath":"/collections/ftm-stp","pageviews":2152},
+    {"pagePath":"/products/ftm-stp-3-in-1-stand-to-pee-device-2nd-gen","pageviews":2119},
+    {"pagePath":"/products/ftm-pack-and-play-ftm-packer-er04","pageviews":1821},
+    {"pagePath":"/products/ftm-pack-and-play-er05","pageviews":1570},
+    {"pagePath":"/products/emisil-er01-anatomical-pack-and-play-model","pageviews":1391},
+    {"pagePath":"/products/ftm-packer-trans-fl02","pageviews":1316},
+    {"pagePath":"/products/ftm-pack-and-play-packer-er03","pageviews":1263}
+  ]
+};
+
+const shopify = {
+  summary: {"totalOrders":36,"totalRevenue":14032.63,"averageOrderValue":389.79,"paidOrders":35,"pendingOrders":1},
+  revenueByDay: [
+    {"date":"2026-02-04","orders":9,"revenue":4053.75},
+    {"date":"2026-02-05","orders":7,"revenue":2670.00},
+    {"date":"2026-02-06","orders":5,"revenue":1558.16},
+    {"date":"2026-02-07","orders":3,"revenue":833.47},
+    {"date":"2026-02-08","orders":3,"revenue":1622.77},
+    {"date":"2026-02-09","orders":3,"revenue":1178.07},
+    {"date":"2026-02-10","orders":4,"revenue":1109.91},
+    {"date":"2026-02-11","orders":2,"revenue":1006.50}
+  ],
+  topProducts: [
+    {"product":"3-in-1 STP Model (1st Gen)","units":4,"revenue":1682},
+    {"product":"ER04 | Versatile Pack & Play","units":4,"revenue":1495},
+    {"product":"ER07 | Large Pack & Play","units":2,"revenue":1125},
+    {"product":"ER06 | Large Pack & Play","units":2,"revenue":990},
+    {"product":"ER05 | Bold Hyper-Realistic P&P","units":2,"revenue":905},
+    {"product":"ER02 | Realistic Pack & Play","units":2,"revenue":890},
+    {"product":"Complete Anatomical System","units":2,"revenue":890},
+    {"product":"3-in-1 STP Packer (2nd Gen)","units":2,"revenue":841},
+    {"product":"ER01 | Realistic Anatomical P&P","units":1,"revenue":630},
+    {"product":"ER03 | Large Pack & Play","units":1,"revenue":535}
+  ],
+  countries: [
+    {"country":"US","orders":12,"share":33.3},
+    {"country":"DE","orders":5,"share":13.9},
+    {"country":"GB","orders":4,"share":11.1},
+    {"country":"AU","orders":3,"share":8.3},
+    {"country":"UA","orders":2,"share":5.6},
+    {"country":"ES","orders":2,"share":5.6},
+    {"country":"Other (8)","orders":8,"share":22.2}
+  ]
+};
+
+const shopifyPrev = {
+  summary: {"totalOrders":23,"totalRevenue":10219.68,"averageOrderValue":444.33}
+};
+
+const gsc = {
+  totals: {"clicks":620,"impressions":4268},
+  keywords: [
+    {"keyword":"emisil","clicks":280,"impressions":371,"ctr":75.47,"position":1.01},
+    {"keyword":"emisil prosthetics","clicks":45,"impressions":64,"ctr":70.31,"position":1.00},
+    {"keyword":"ftm packer","clicks":37,"impressions":840,"ctr":4.40,"position":7.88},
+    {"keyword":"ftm stp","clicks":28,"impressions":122,"ctr":22.95,"position":7.11},
+    {"keyword":"prosthetic penis","clicks":21,"impressions":654,"ctr":3.21,"position":6.57},
+    {"keyword":"emisil stp","clicks":18,"impressions":21,"ctr":85.71,"position":1.00},
+    {"keyword":"ftm sex toys","clicks":18,"impressions":177,"ctr":10.17,"position":5.42},
+    {"keyword":"packer ftm","clicks":17,"impressions":226,"ctr":7.52,"position":9.09},
+    {"keyword":"ftm bottom growth","clicks":16,"impressions":378,"ctr":4.23,"position":3.63},
+    {"keyword":"ftm prosthetic","clicks":14,"impressions":78,"ctr":17.95,"position":4.32},
+    {"keyword":"pack and play ftm","clicks":14,"impressions":95,"ctr":14.74,"position":5.55},
+    {"keyword":"ftm pack and play","clicks":13,"impressions":156,"ctr":8.33,"position":7.05},
+    {"keyword":"ftm packers","clicks":12,"impressions":206,"ctr":5.83,"position":10.78},
+    {"keyword":"t dick","clicks":12,"impressions":470,"ctr":2.55,"position":5.37},
+    {"keyword":"prosthetic penis ftm","clicks":10,"impressions":29,"ctr":34.48,"position":3.90},
+    {"keyword":"stp ftm","clicks":10,"impressions":61,"ctr":16.39,"position":4.28},
+    {"keyword":"ftm bottom growth stages","clicks":9,"impressions":88,"ctr":10.23,"position":2.24},
+    {"keyword":"ftm prosthesis","clicks":9,"impressions":35,"ctr":25.71,"position":6.09},
+    {"keyword":"packers ftm","clicks":9,"impressions":119,"ctr":7.56,"position":6.50},
+    {"keyword":"emisil packer","clicks":8,"impressions":8,"ctr":100.00,"position":1.00}
+  ]
+};
+
+const gscPrev = {totals:{"clicks":837,"impressions":6194}};
+
+// ═══════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════
+const fmt = n => n.toLocaleString('en-US');
+const fmtE = n => '\u20AC' + n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+const pct = (c,p) => p===0?'+\u221E':((c-p)/p*100).toFixed(1);
+const pctStr = (c,p) => {const v=pct(c,p);return (v>=0?'+':'')+v+'%'};
+const deltaClass = (c,p,inv) => {
+  const d=c-p; if(d===0)return'neutral';
+  return inv?(d>0?'down':'up'):(d>0?'up':'down');
+};
+const dayLabel = s => {
+  const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  if(s.length===8) return m[parseInt(s.slice(4,6))-1]+' '+parseInt(s.slice(6));
+  return m[parseInt(s.slice(5,7))-1]+' '+parseInt(s.slice(8));
+};
+const shortDay = s => {
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  if(s.length===8) {
+    const d=new Date(s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6));
+    return days[d.getUTCDay()];
+  }
+  return days[new Date(s).getUTCDay()];
+};
+
+// ═══════════════════════════════════════════════════════════════
+// CHART DEFAULTS
+// ═══════════════════════════════════════════════════════════════
+Chart.defaults.color = '#8b8fa3';
+Chart.defaults.borderColor = 'rgba(255,255,255,.06)';
+Chart.defaults.font.family = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.labels.boxWidth = 10;
+Chart.defaults.plugins.legend.labels.padding = 14;
+Chart.defaults.plugins.tooltip.backgroundColor = '#1a1d27';
+Chart.defaults.plugins.tooltip.borderColor = '#2a2d3a';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.padding = 10;
+Chart.defaults.plugins.tooltip.cornerRadius = 8;
+
+// ═══════════════════════════════════════════════════════════════
+// WOW SUMMARY BAR
+// ═══════════════════════════════════════════════════════════════
+const wowData = [
+  {m:'Sessions',v:fmt(ga4.overview.sessions),c:pctStr(ga4.overview.sessions,ga4Prev.overview.sessions),cls:deltaClass(ga4.overview.sessions,ga4Prev.overview.sessions)},
+  {m:'Users',v:fmt(ga4.overview.users),c:pctStr(ga4.overview.users,ga4Prev.overview.users),cls:deltaClass(ga4.overview.users,ga4Prev.overview.users)},
+  {m:'Revenue',v:fmtE(shopify.summary.totalRevenue),c:pctStr(shopify.summary.totalRevenue,shopifyPrev.summary.totalRevenue),cls:deltaClass(shopify.summary.totalRevenue,shopifyPrev.summary.totalRevenue)},
+  {m:'Orders',v:shopify.summary.totalOrders,c:pctStr(shopify.summary.totalOrders,shopifyPrev.summary.totalOrders),cls:deltaClass(shopify.summary.totalOrders,shopifyPrev.summary.totalOrders)},
+  {m:'AOV',v:fmtE(shopify.summary.averageOrderValue),c:pctStr(shopify.summary.averageOrderValue,shopifyPrev.summary.averageOrderValue),cls:deltaClass(shopify.summary.averageOrderValue,shopifyPrev.summary.averageOrderValue)},
+  {m:'Bounce Rate',v:(ga4.overview.bounceRate*100).toFixed(1)+'%',c:(((ga4.overview.bounceRate-ga4Prev.overview.bounceRate)*100).toFixed(1))+'pp',cls:deltaClass(ga4.overview.bounceRate,ga4Prev.overview.bounceRate,true)},
+];
+document.getElementById('wowBar').innerHTML = wowData.map(d=>
+  `<div class="wow-item"><div class="metric">${d.m}</div><div class="val">${d.v}</div><div class="chg ${d.cls}">${d.c}</div></div>`
+).join('');
+
+// ═══════════════════════════════════════════════════════════════
+// GA4 KPIs
+// ═══════════════════════════════════════════════════════════════
+const ga4Kpis = [
+  {label:'Sessions',value:fmt(ga4.overview.sessions),delta:pctStr(ga4.overview.sessions,ga4Prev.overview.sessions),cls:deltaClass(ga4.overview.sessions,ga4Prev.overview.sessions),c:'blue'},
+  {label:'Users',value:fmt(ga4.overview.users),delta:pctStr(ga4.overview.users,ga4Prev.overview.users),cls:deltaClass(ga4.overview.users,ga4Prev.overview.users),c:'purple'},
+  {label:'Pageviews',value:fmt(ga4.overview.pageviews),delta:pctStr(ga4.overview.pageviews,ga4Prev.overview.pageviews),cls:deltaClass(ga4.overview.pageviews,ga4Prev.overview.pageviews),c:'cyan'},
+  {label:'Bounce Rate',value:(ga4.overview.bounceRate*100).toFixed(1)+'%',delta:(((ga4.overview.bounceRate-ga4Prev.overview.bounceRate)*100).toFixed(1))+'pp',cls:deltaClass(ga4.overview.bounceRate,ga4Prev.overview.bounceRate,true),c:'orange'},
+  {label:'Pages/Session',value:(ga4.overview.pageviews/ga4.overview.sessions).toFixed(2),delta:'vs '+(ga4Prev.overview.pageviews/ga4Prev.overview.sessions).toFixed(2),cls:'neutral',c:'green'},
+  {label:'Avg Daily Sessions',value:fmt(Math.round(ga4.daily.slice(0,7).reduce((s,d)=>s+d.sessions,0)/7)),delta:'excl. partial Feb 11',cls:'neutral',c:'blue'},
+];
+document.getElementById('ga4Kpis').innerHTML = ga4Kpis.map(k=>
+  `<div class="kpi ${k.c}"><div class="label">${k.label}</div><div class="value">${k.value}</div><div class="delta ${k.cls}">${k.delta}</div></div>`
+).join('');
+
+// ═══════════════════════════════════════════════════════════════
+// GA4 DAILY CHART — Sessions & Users
+// ═══════════════════════════════════════════════════════════════
+new Chart(document.getElementById('ga4DailyChart'),{
+  type:'line',
+  data:{
+    labels: ga4.daily.map(d=>shortDay(d.date)+' '+dayLabel(d.date)),
+    datasets:[
+      {label:'Sessions',data:ga4.daily.map(d=>d.sessions),borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,.1)',fill:true,tension:.3,pointRadius:3,pointBackgroundColor:'#6366f1'},
+      {label:'Users',data:ga4.daily.map(d=>d.users),borderColor:'#a855f7',backgroundColor:'rgba(168,85,247,.05)',fill:true,tension:.3,pointRadius:3,pointBackgroundColor:'#a855f7',borderDash:[5,3]}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:true,aspectRatio:1.8,
+    scales:{y:{beginAtZero:false,grid:{color:'rgba(255,255,255,.04)'}},x:{grid:{display:false}}},
+    plugins:{tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': '+fmt(ctx.parsed.y)}}}
+  }
+});
+
+// GA4 Pageviews & Bounce
+new Chart(document.getElementById('ga4PvBounceChart'),{
+  type:'bar',
+  data:{
+    labels: ga4.daily.map(d=>shortDay(d.date)+' '+dayLabel(d.date)),
+    datasets:[
+      {label:'Pageviews',data:ga4.daily.map(d=>d.pageviews),backgroundColor:'rgba(6,182,212,.6)',borderRadius:4,yAxisID:'y'},
+      {label:'Bounce Rate',data:ga4.daily.map(d=>(d.bounceRate*100).toFixed(1)),type:'line',borderColor:'#f59e0b',backgroundColor:'transparent',tension:.3,pointRadius:3,pointBackgroundColor:'#f59e0b',yAxisID:'y1'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:true,aspectRatio:1.8,
+    scales:{
+      y:{beginAtZero:true,grid:{color:'rgba(255,255,255,.04)'},ticks:{callback:v=>fmt(v)}},
+      y1:{position:'right',min:20,max:35,grid:{display:false},ticks:{callback:v=>v+'%'}},
+      x:{grid:{display:false}}
+    },
+    plugins:{tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': '+(ctx.datasetIndex===1?ctx.parsed.y+'%':fmt(ctx.parsed.y))}}}
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// TOP PAGES TABLE
+// ═══════════════════════════════════════════════════════════════
+const maxPv = ga4.topPages[0].pageviews;
+const tpHtml = `<thead><tr><th>#</th><th>Page</th><th>Views</th><th></th><th>Sessions</th><th>Bounce</th><th>vs Last Wk</th></tr></thead><tbody>`+
+  ga4.topPages.map((p,i)=>{
+    const prev = ga4Prev.topPages.find(pp=>pp.pagePath===p.pagePath);
+    const chg = prev?pctStr(p.pageviews,prev.pageviews):'new';
+    const chgCls = prev?deltaClass(p.pageviews,prev.pageviews):'neutral';
+    const name = p.pagePath==='/'?'Homepage':p.pagePath.split('/').pop().replace(/-/g,' ').replace(/\b\w/g,l=>l.toUpperCase());
+    return `<tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td><div style="font-weight:500;margin-bottom:2px">${name}</div><div class="page-path">${p.pagePath}</div></td>
+      <td style="font-weight:600">${fmt(p.pageviews)}</td>
+      <td style="width:80px"><div class="bar-bg"><div class="bar-fill blue" style="width:${(p.pageviews/maxPv*100).toFixed(0)}%"></div></div></td>
+      <td>${fmt(p.sessions)}</td>
+      <td>${(p.bounceRate*100).toFixed(1)}%</td>
+      <td><span class="delta ${chgCls}">${chg}</span></td>
+    </tr>`;
+  }).join('')+'</tbody>';
+document.getElementById('topPagesTable').innerHTML=tpHtml;
+
+// ═══════════════════════════════════════════════════════════════
+// SHOPIFY KPIs
+// ═══════════════════════════════════════════════════════════════
+const sKpis = [
+  {label:'Revenue',value:fmtE(shopify.summary.totalRevenue),delta:pctStr(shopify.summary.totalRevenue,shopifyPrev.summary.totalRevenue),cls:deltaClass(shopify.summary.totalRevenue,shopifyPrev.summary.totalRevenue),c:'green'},
+  {label:'Orders',value:shopify.summary.totalOrders,delta:pctStr(shopify.summary.totalOrders,shopifyPrev.summary.totalOrders),cls:deltaClass(shopify.summary.totalOrders,shopifyPrev.summary.totalOrders),c:'green'},
+  {label:'AOV',value:fmtE(shopify.summary.averageOrderValue),delta:pctStr(shopify.summary.averageOrderValue,shopifyPrev.summary.averageOrderValue),cls:deltaClass(shopify.summary.averageOrderValue,shopifyPrev.summary.averageOrderValue),c:'cyan'},
+  {label:'Conversion',value:(shopify.summary.totalOrders/ga4.overview.sessions*100).toFixed(2)+'%',delta:'vs '+(shopifyPrev.summary.totalOrders/ga4Prev.overview.sessions*100).toFixed(2)+'%',cls:'up',c:'purple'},
+  {label:'Daily Revenue',value:fmtE(Math.round(shopify.summary.totalRevenue/8)),delta:'8-day avg',cls:'neutral',c:'green'},
+  {label:'Paid Orders',value:shopify.summary.paidOrders,delta:'1 pending',cls:'neutral',c:'blue'},
+];
+document.getElementById('shopifyKpis').innerHTML = sKpis.map(k=>
+  `<div class="kpi ${k.c}"><div class="label">${k.label}</div><div class="value">${k.value}</div><div class="delta ${k.cls}">${k.delta}</div></div>`
+).join('');
+
+// ═══════════════════════════════════════════════════════════════
+// SHOPIFY REVENUE CHART
+// ═══════════════════════════════════════════════════════════════
+new Chart(document.getElementById('shopifyRevenueChart'),{
+  type:'bar',
+  data:{
+    labels: shopify.revenueByDay.map(d=>shortDay(d.date)+' '+dayLabel(d.date)),
+    datasets:[
+      {label:'Revenue',data:shopify.revenueByDay.map(d=>d.revenue),backgroundColor:'rgba(34,197,94,.6)',borderRadius:4,yAxisID:'y'},
+      {label:'Orders',data:shopify.revenueByDay.map(d=>d.orders),type:'line',borderColor:'#a855f7',backgroundColor:'transparent',tension:.3,pointRadius:4,pointBackgroundColor:'#a855f7',yAxisID:'y1'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:true,aspectRatio:1.8,
+    scales:{
+      y:{beginAtZero:true,grid:{color:'rgba(255,255,255,.04)'},ticks:{callback:v=>'\u20AC'+fmt(v)}},
+      y1:{position:'right',beginAtZero:true,grid:{display:false},ticks:{stepSize:1}},
+      x:{grid:{display:false}}
+    },
+    plugins:{tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': '+(ctx.datasetIndex===0?'\u20AC'+fmt(ctx.parsed.y):ctx.parsed.y)}}}
+  }
+});
+
+// SHOPIFY COUNTRY CHART
+const countryColors = ['#6366f1','#a855f7','#06b6d4','#22c55e','#f59e0b','#ef4444','#64748b'];
+new Chart(document.getElementById('shopifyCountryChart'),{
+  type:'doughnut',
+  data:{
+    labels: shopify.countries.map(c=>c.country),
+    datasets:[{
+      data: shopify.countries.map(c=>c.orders),
+      backgroundColor: countryColors,
+      borderWidth:0,
+      hoverOffset:6
+    }]
+  },
+  options:{responsive:true,maintainAspectRatio:true,aspectRatio:1.8,
+    cutout:'65%',
+    plugins:{
+      legend:{position:'right',labels:{padding:8,font:{size:11}}},
+      tooltip:{callbacks:{label:ctx=>ctx.label+': '+ctx.parsed+' orders ('+shopify.countries[ctx.dataIndex].share+'%)'}}
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// TOP PRODUCTS TABLE
+// ═══════════════════════════════════════════════════════════════
+const maxRev = shopify.topProducts[0].revenue;
+const prodHtml = `<thead><tr><th>#</th><th>Product</th><th>Units</th><th>Revenue</th><th></th></tr></thead><tbody>`+
+  shopify.topProducts.map((p,i)=>`<tr>
+    <td style="color:var(--muted)">${i+1}</td>
+    <td style="font-weight:500">${p.product}</td>
+    <td style="text-align:center">${p.units}</td>
+    <td style="font-weight:600">${fmtE(p.revenue)}</td>
+    <td style="width:100px"><div class="bar-bg"><div class="bar-fill green" style="width:${(p.revenue/maxRev*100).toFixed(0)}%"></div></div></td>
+  </tr>`).join('')+'</tbody>';
+document.getElementById('topProductsTable').innerHTML=prodHtml;
+
+// ═══════════════════════════════════════════════════════════════
+// GSC KPIs
+// ═══════════════════════════════════════════════════════════════
+const brandKw = gsc.keywords.filter(k=>k.keyword.includes('emisil'));
+const brandClicks = brandKw.reduce((s,k)=>s+k.clicks,0);
+const brandImpr = brandKw.reduce((s,k)=>s+k.impressions,0);
+const gscKData = [
+  {label:'Total Clicks',value:fmt(gsc.totals.clicks),delta:pctStr(gsc.totals.clicks,gscPrev.totals.clicks)+' *',cls:deltaClass(gsc.totals.clicks,gscPrev.totals.clicks),c:'orange'},
+  {label:'Total Impressions',value:fmt(gsc.totals.impressions),delta:pctStr(gsc.totals.impressions,gscPrev.totals.impressions)+' *',cls:deltaClass(gsc.totals.impressions,gscPrev.totals.impressions),c:'orange'},
+  {label:'Avg CTR',value:(gsc.totals.clicks/gsc.totals.impressions*100).toFixed(1)+'%',delta:'top 20 keywords',cls:'neutral',c:'cyan'},
+  {label:'Brand Clicks',value:fmt(brandClicks),delta:'CTR '+(brandClicks/brandImpr*100).toFixed(0)+'%',cls:'up',c:'purple'},
+];
+document.getElementById('gscKpis').innerHTML = gscKData.map(k=>
+  `<div class="kpi ${k.c}"><div class="label">${k.label}</div><div class="value">${k.value}</div><div class="delta ${k.cls}">${k.delta}</div></div>`
+).join('') + '<div style="grid-column:1/-1;font-size:.7rem;color:var(--muted);padding:4px 0">* GSC data for recent 2-3 days is typically incomplete. Current-week numbers will rise as Google finalizes reporting.</div>';
+
+// ═══════════════════════════════════════════════════════════════
+// GSC KEYWORDS CHART (top 10 non-brand)
+// ═══════════════════════════════════════════════════════════════
+const nonBrand = gsc.keywords.filter(k=>!k.keyword.includes('emisil')).slice(0,10);
+new Chart(document.getElementById('gscKeywordsChart'),{
+  type:'bar',
+  data:{
+    labels: nonBrand.map(k=>k.keyword),
+    datasets:[
+      {label:'Clicks',data:nonBrand.map(k=>k.clicks),backgroundColor:'rgba(245,158,11,.7)',borderRadius:4,yAxisID:'y'},
+      {label:'Impressions',data:nonBrand.map(k=>k.impressions),backgroundColor:'rgba(99,102,241,.4)',borderRadius:4,yAxisID:'y1'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:true,aspectRatio:1.8,indexAxis:'y',
+    scales:{
+      y:{grid:{display:false},ticks:{font:{size:10}}},
+      x:{grid:{color:'rgba(255,255,255,.04)'},position:'top'},
+      y1:{display:false}
+    },
+    plugins:{legend:{position:'top'}}
+  }
+});
+
+// GSC POSITION SCATTER
+new Chart(document.getElementById('gscPositionChart'),{
+  type:'bubble',
+  data:{
+    datasets:[{
+      label:'Keywords',
+      data: gsc.keywords.map(k=>({x:k.position,y:k.ctr,r:Math.max(3,Math.sqrt(k.impressions)/3),keyword:k.keyword,clicks:k.clicks,impressions:k.impressions})),
+      backgroundColor: gsc.keywords.map(k=>k.keyword.includes('emisil')?'rgba(34,197,94,.6)':'rgba(99,102,241,.5)'),
+      borderColor: gsc.keywords.map(k=>k.keyword.includes('emisil')?'#22c55e':'#6366f1'),
+      borderWidth:1
+    }]
+  },
+  options:{responsive:true,maintainAspectRatio:true,aspectRatio:1.8,
+    scales:{
+      x:{title:{display:true,text:'Position (lower is better)',color:'#8b8fa3'},reverse:false,grid:{color:'rgba(255,255,255,.04)'}},
+      y:{title:{display:true,text:'CTR %',color:'#8b8fa3'},grid:{color:'rgba(255,255,255,.04)'}}
+    },
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{
+        title:ctx=>[],
+        label:ctx=>{const d=ctx.raw;return [d.keyword,'Pos: '+d.x.toFixed(1)+' | CTR: '+d.y.toFixed(1)+'%','Clicks: '+d.clicks+' | Impr: '+fmt(d.impressions)];}
+      }}
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// GSC KEYWORDS TABLE
+// ═══════════════════════════════════════════════════════════════
+const gscHtml = `<thead><tr><th>#</th><th>Keyword</th><th>Clicks</th><th>Impressions</th><th>CTR</th><th>Position</th></tr></thead><tbody>`+
+  gsc.keywords.map((k,i)=>{
+    let posCls='pos-low';
+    if(k.position<=1.5)posCls='pos-1';
+    else if(k.position<=5)posCls='pos-top5';
+    else if(k.position<=10)posCls='pos-top10';
+    const isBrand=k.keyword.includes('emisil');
+    return `<tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td style="font-weight:${isBrand?'600':'400'};${isBrand?'color:#22c55e':''}">${k.keyword}</td>
+      <td style="font-weight:600">${k.clicks}</td>
+      <td>${fmt(k.impressions)}</td>
+      <td>${k.ctr.toFixed(1)}%</td>
+      <td><span class="pos-badge ${posCls}">${k.position.toFixed(1)}</span></td>
+    </tr>`;
+  }).join('')+'</tbody>';
+document.getElementById('gscTable').innerHTML=gscHtml;
+</script>
+</body>
+</html>
