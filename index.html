@@ -147,6 +147,45 @@ tr:hover td{background:rgba(255,255,255,.02)}
   text-align:center;padding:32px 0 16px;color:var(--muted);font-size:.75rem;
 }
 
+/* ── LOGIN OVERLAY ── */
+#loginOverlay{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+}
+#loginOverlay.hidden{display:none}
+.login-box{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:40px 36px;width:100%;max-width:360px;text-align:center;
+}
+.login-box h2{
+  font-size:1.4rem;font-weight:700;margin-bottom:4px;
+  background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.login-box .login-sub{color:var(--muted);font-size:.82rem;margin-bottom:24px}
+.login-box input{
+  width:100%;padding:10px 14px;
+  background:var(--bg);border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-size:.9rem;outline:none;
+  transition:border-color .2s;
+}
+.login-box input:focus{border-color:var(--accent-blue)}
+.login-box button{
+  width:100%;margin-top:12px;padding:10px 0;
+  background:var(--accent-blue);color:#fff;border:none;border-radius:8px;
+  font-size:.9rem;font-weight:600;cursor:pointer;
+  transition:opacity .2s;
+}
+.login-box button:hover{opacity:.85}
+.login-error{
+  color:var(--accent-red);font-size:.78rem;margin-top:10px;
+  min-height:1.2em;
+}
+#dashboardContent{display:none}
+#dashboardContent.visible{display:block}
+
 /* ── WOW SUMMARY BAR ── */
 .wow-bar{
   display:grid;gap:8px;margin-bottom:24px;
@@ -173,6 +212,18 @@ tr:hover td{background:rgba(255,255,255,.02)}
 </style>
 </head>
 <body>
+
+<div id="loginOverlay">
+  <div class="login-box">
+    <h2>Emisil Nerve Center</h2>
+    <div class="login-sub">Enter password to view the dashboard</div>
+    <input type="password" id="loginPassword" placeholder="Password" autofocus>
+    <button id="loginBtn">Sign In</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<div id="dashboardContent">
 
 <div class="header">
   <h1>Emisil Nerve Center</h1>
@@ -262,7 +313,41 @@ tr:hover td{background:rgba(255,255,255,.02)}
   Emisil Nerve Center &middot; Data sources: GA4, Shopify, Google Search Console &middot; Auto-generated
 </div>
 
+</div><!-- end #dashboardContent -->
+
 <script>
+// ═══════════════════════════════════════════════════════════════
+// AUTH GATE
+// ═══════════════════════════════════════════════════════════════
+(function(){
+  const PASS_HASH = '9a1b22f7';
+  function simpleHash(s){let h=0;for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return(h>>>0).toString(16).slice(0,8)}
+
+  function unlock(){
+    document.getElementById('loginOverlay').classList.add('hidden');
+    document.getElementById('dashboardContent').classList.add('visible');
+    sessionStorage.setItem('nc_auth','1');
+  }
+
+  if(sessionStorage.getItem('nc_auth')==='1'){
+    unlock();
+  } else {
+    var pwd=document.getElementById('loginPassword');
+    var btn=document.getElementById('loginBtn');
+    var err=document.getElementById('loginError');
+    function attempt(){
+      if(simpleHash(pwd.value)===PASS_HASH){
+        unlock();
+      } else {
+        err.textContent='Incorrect password';
+        pwd.value='';
+        pwd.focus();
+      }
+    }
+    btn.addEventListener('click',attempt);
+    pwd.addEventListener('keydown',function(e){if(e.key==='Enter')attempt();});
+  }
+})();
 // ═══════════════════════════════════════════════════════════════
 // EMBEDDED DATA
 // ═══════════════════════════════════════════════════════════════
