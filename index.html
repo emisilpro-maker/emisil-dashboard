@@ -134,6 +134,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .bar-fill.blue{background:var(--accent-blue)}
 .bar-fill.green{background:var(--accent-green)}
 .bar-fill.orange{background:var(--accent-orange)}
+.bar-fill.purple{background:var(--accent-purple)}
 
 /* ── PAGE PATH ── */
 .page-path{
@@ -228,7 +229,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
 <div class="header">
   <h1>Emisil Nerve Center</h1>
   <div class="sub">Weekly Performance Dashboard</div>
-  <div class="period">Feb 10 &ndash; Feb 17, 2026 &nbsp;&middot;&nbsp; Updated Feb 17</div>
+  <div class="period">Feb 13 &ndash; Feb 20, 2026 &nbsp;&middot;&nbsp; Updated Feb 20</div>
 </div>
 
 <!-- ════════════════════════ WOW SUMMARY ════════════════════════ -->
@@ -309,6 +310,30 @@ tr:hover td{background:rgba(255,255,255,.02)}
   <table id="gscTable"></table>
 </div>
 
+<!-- ════════════════════════ SEO PERFORMANCE ════════════════════════ -->
+<div class="section-title">
+  <span class="dot" style="background:var(--accent-purple)"></span>
+  SEO Performance
+  <span class="tag">30-Day Report</span>
+</div>
+
+<div class="kpi-grid" id="seoKpis"></div>
+
+<div class="table-card" style="margin-top:12px">
+  <h3>Top 10 Blog Posts by Organic Clicks (30 days)</h3>
+  <table id="seoBlogTable"></table>
+</div>
+
+<div class="table-card">
+  <h3>Top 10 Search Queries (30 days)</h3>
+  <table id="seoQueryTable"></table>
+</div>
+
+<div class="table-card">
+  <h3>Position Change Alerts (&gt;3 positions shift)</h3>
+  <div id="positionAlerts"></div>
+</div>
+
 <div class="footer">
   Emisil Nerve Center &middot; Data sources: GA4, Shopify, Google Search Console &middot; Auto-generated
 </div>
@@ -353,33 +378,12 @@ tr:hover td{background:rgba(255,255,255,.02)}
 // ═══════════════════════════════════════════════════════════════
 const ga4 = {
   "overview": {
-    "sessions": 14681,
-    "users": 12219,
-    "pageviews": 58516,
-    "bounceRate": 0.2663306314283768
+    "sessions": 14765,
+    "users": 12326,
+    "pageviews": 56568,
+    "bounceRate": 0.2612258719945818
   },
   "daily": [
-    {
-      "date": "20260209",
-      "sessions": 1843,
-      "users": 1568,
-      "pageviews": 6880,
-      "bounceRate": 0.23928377645143786
-    },
-    {
-      "date": "20260210",
-      "sessions": 1819,
-      "users": 1591,
-      "pageviews": 7827,
-      "bounceRate": 0.2594832325453546
-    },
-    {
-      "date": "20260211",
-      "sessions": 2414,
-      "users": 2203,
-      "pageviews": 7304,
-      "bounceRate": 0.364125932062966
-    },
     {
       "date": "20260212",
       "sessions": 2282,
@@ -410,106 +414,115 @@ const ga4 = {
     },
     {
       "date": "20260216",
-      "sessions": 1647,
-      "users": 1414,
+      "sessions": 1640,
+      "users": 1391,
       "pageviews": 6241,
-      "bounceRate": 0.25440194292653306
+      "bounceRate": 0.24817073170731707
+    },
+    {
+      "date": "20260217",
+      "sessions": 1815,
+      "users": 1620,
+      "pageviews": 6931,
+      "bounceRate": 0.2545454545454545
+    },
+    {
+      "date": "20260218",
+      "sessions": 2224,
+      "users": 2016,
+      "pageviews": 7072,
+      "bounceRate": 0.306205035971223
+    },
+    {
+      "date": "20260219",
+      "sessions": 2047,
+      "users": 1884,
+      "pageviews": 6060,
+      "bounceRate": 0.2887151929653151
     }
   ],
   "topPages": [
     {
       "pagePath": "/",
-      "pageviews": 5769,
-      "sessions": 4612,
-      "users": 3997,
-      "bounceRate": 0.1316131830008673
+      "pageviews": 5180,
+      "sessions": 4197,
+      "users": 3656,
+      "bounceRate": 0.1289015963783655
     },
     {
       "pagePath": "/collections/ftm-pack-and-play",
-      "pageviews": 4128,
-      "sessions": 3013,
-      "users": 2624,
-      "bounceRate": 0.03816793893129771
+      "pageviews": 3691,
+      "sessions": 2720,
+      "users": 2386,
+      "bounceRate": 0.04338235294117647
     },
     {
       "pagePath": "/collections/ftm-packers",
-      "pageviews": 2891,
-      "sessions": 2222,
-      "users": 2014,
-      "bounceRate": 0.06840684068406841
+      "pageviews": 3054,
+      "sessions": 2346,
+      "users": 2148,
+      "bounceRate": 0.07033248081841433
     },
     {
       "pagePath": "/collections/ftm-stp",
-      "pageviews": 2660,
-      "sessions": 1960,
-      "users": 1770,
-      "bounceRate": 0.07142857142857142
-    },
-    {
-      "pagePath": "/products/ftm-pack-and-play-ftm-packer-er04",
-      "pageviews": 2440,
-      "sessions": 753,
-      "users": 636,
-      "bounceRate": 0.035856573705179286
-    },
-    {
-      "pagePath": "/products/ftm-stp-3-in-1-stand-to-pee-device-2nd-gen",
-      "pageviews": 2346,
-      "sessions": 682,
-      "users": 569,
-      "bounceRate": 0.1158357771260997
+      "pageviews": 2446,
+      "sessions": 1879,
+      "users": 1735,
+      "bounceRate": 0.09366684406599254
     },
     {
       "pagePath": "/products/ftm-uncut-packer-fl11",
-      "pageviews": 2004,
-      "sessions": 492,
-      "users": 416,
-      "bounceRate": 0.10772357723577236
+      "pageviews": 2205,
+      "sessions": 559,
+      "users": 489,
+      "bounceRate": 0.10554561717352415
     },
     {
       "pagePath": "/products/ftm-pack-and-play-er05",
-      "pageviews": 1959,
-      "sessions": 637,
-      "users": 556,
-      "bounceRate": 0.05337519623233909
+      "pageviews": 1978,
+      "sessions": 635,
+      "users": 572,
+      "bounceRate": 0.05669291338582677
+    },
+    {
+      "pagePath": "/products/ftm-pack-and-play-ftm-packer-er04",
+      "pageviews": 1951,
+      "sessions": 685,
+      "users": 586,
+      "bounceRate": 0.026277372262773723
     },
     {
       "pagePath": "/products/ftm-packer-trans-fl02",
-      "pageviews": 1651,
-      "sessions": 588,
-      "users": 510,
-      "bounceRate": 0.08333333333333333
+      "pageviews": 1859,
+      "sessions": 655,
+      "users": 581,
+      "bounceRate": 0.0732824427480916
     },
     {
-      "pagePath": "/products/stp-packer-3rd-generation",
-      "pageviews": 1559,
-      "sessions": 550,
-      "users": 473,
-      "bounceRate": 0.07454545454545454
+      "pagePath": "/products/ftm-stp-3-in-1-stand-to-pee-device-2nd-gen",
+      "pageviews": 1821,
+      "sessions": 600,
+      "users": 517,
+      "bounceRate": 0.10333333333333333
+    },
+    {
+      "pagePath": "/products/pack-and-play-packer-ftm-er07",
+      "pageviews": 1691,
+      "sessions": 607,
+      "users": 510,
+      "bounceRate": 0.04118616144975288
     }
   ]
 };
 
 const ga4Prev = {
   "overview": {
-    "sessions": 12884,
-    "users": 11162,
-    "pageviews": 50634,
-    "bounceRate": 0.24642968022353307
+    "sessions": 13213,
+    "users": 11464,
+    "pageviews": 49545,
+    "bounceRate": 0.2802542950124877
   },
   "daily": [
-    {
-      "date": "20260202",
-      "sessions": 2036
-    },
-    {
-      "date": "20260203",
-      "sessions": 1747
-    },
-    {
-      "date": "20260204",
-      "sessions": 1911
-    },
     {
       "date": "20260205",
       "sessions": 1867
@@ -525,76 +538,73 @@ const ga4Prev = {
     {
       "date": "20260208",
       "sessions": 1829
+    },
+    {
+      "date": "20260209",
+      "sessions": 1843
+    },
+    {
+      "date": "20260210",
+      "sessions": 1819
+    },
+    {
+      "date": "20260211",
+      "sessions": 2414
     }
   ],
   "topPages": [
     {
       "pagePath": "/",
-      "pageviews": 5336
+      "pageviews": 5113
     },
     {
       "pagePath": "/collections/ftm-pack-and-play",
-      "pageviews": 4059
-    },
-    {
-      "pagePath": "/collections/ftm-packers",
-      "pageviews": 2744
+      "pageviews": 3535
     },
     {
       "pagePath": "/products/ftm-stp-3-in-1-stand-to-pee-device-2nd-gen",
-      "pageviews": 2595
+      "pageviews": 2529
+    },
+    {
+      "pagePath": "/collections/ftm-packers",
+      "pageviews": 2479
     },
     {
       "pagePath": "/collections/ftm-stp",
-      "pageviews": 2292
+      "pageviews": 2246
     },
     {
       "pagePath": "/products/ftm-pack-and-play-ftm-packer-er04",
-      "pageviews": 1927
+      "pageviews": 2075
     },
     {
       "pagePath": "/products/emisil-er01-anatomical-pack-and-play-model",
-      "pageviews": 1569
+      "pageviews": 1293
     },
     {
       "pagePath": "/products/ftm-packer-trans-fl02",
-      "pageviews": 1531
+      "pageviews": 1252
     },
     {
       "pagePath": "/products/ftm-pack-and-play-er05",
-      "pageviews": 1436
+      "pageviews": 1243
     },
     {
-      "pagePath": "/products/ftm-uncut-packer-fl11",
-      "pageviews": 1332
+      "pagePath": "/products/stp-packer-3rd-generation",
+      "pageviews": 1208
     }
   ]
 };
 
 const shopify = {
   "summary": {
-    "totalOrders": 48,
-    "totalRevenue": 20746.26,
-    "averageOrderValue": 432.21,
-    "paidOrders": 47,
+    "totalOrders": 36,
+    "totalRevenue": 17009.41,
+    "averageOrderValue": 472.48,
+    "paidOrders": 35,
     "pendingOrders": 0
   },
   "revenueByDay": [
-    {
-      "date": "2026-02-09",
-      "orders": 3,
-      "revenue": 1178.07
-    },
-    {
-      "date": "2026-02-10",
-      "orders": 4,
-      "revenue": 1109.91
-    },
-    {
-      "date": "2026-02-11",
-      "orders": 10,
-      "revenue": 4254.95
-    },
     {
       "date": "2026-02-12",
       "orders": 4,
@@ -619,28 +629,43 @@ const shopify = {
       "date": "2026-02-16",
       "orders": 5,
       "revenue": 1887.59
+    },
+    {
+      "date": "2026-02-17",
+      "orders": 1,
+      "revenue": 775.16
+    },
+    {
+      "date": "2026-02-18",
+      "orders": 3,
+      "revenue": 1516.67
+    },
+    {
+      "date": "2026-02-19",
+      "orders": 1,
+      "revenue": 514.25
     }
   ],
   "topProducts": [
     {
-      "product": "ER02 | Realistic FTM P&P Model",
-      "units": 5,
-      "revenue": 2450
-    },
-    {
       "product": "FL11 | Realistic Uncut FTM Packing Model",
-      "units": 3,
-      "revenue": 2325
+      "units": 4,
+      "revenue": 2871
     },
     {
       "product": "3rd Gen STP Packer (Cut / Circumcised) – Discreet Pack & Pee",
-      "units": 4,
-      "revenue": 2127
+      "units": 5,
+      "revenue": 2732
     },
     {
-      "product": "ER05 | Bold Hyper-Realistic P&P Model",
-      "units": 5,
-      "revenue": 2120
+      "product": "ER01 | Realistic Anatomical P&P Model",
+      "units": 4,
+      "revenue": 2043
+    },
+    {
+      "product": "ER02 | Realistic FTM P&P Model",
+      "units": 4,
+      "revenue": 1997
     },
     {
       "product": "ER07 | Large Realistic FTM P&P Model",
@@ -653,14 +678,9 @@ const shopify = {
       "revenue": 1747
     },
     {
-      "product": "3-in-1 STP Packer (FTM) – Pack, Pee & Play (2nd Gen)",
-      "units": 3,
-      "revenue": 1518
-    },
-    {
-      "product": "ER01 | Realistic Anatomical P&P Model",
-      "units": 3,
-      "revenue": 1513
+      "product": "FL02 | Hyper-Realistic Soft FTM Packing Model",
+      "units": 4,
+      "revenue": 1404
     },
     {
       "product": "3rd Gen STP (Uncut) | Realistic FTM Silicone Model",
@@ -668,106 +688,104 @@ const shopify = {
       "revenue": 1212
     },
     {
-      "product": "FL02 | Hyper-Realistic Soft FTM Packing Model",
-      "units": 3,
-      "revenue": 1204
+      "product": "ER04 | Versatile FTM P&P Model",
+      "units": 2,
+      "revenue": 825
+    },
+    {
+      "product": "ER05 | Bold Hyper-Realistic P&P Model",
+      "units": 2,
+      "revenue": 786
     }
   ],
   "countries": [
     {
       "country": "US",
-      "orders": 20,
-      "share": 41.7
+      "orders": 14,
+      "share": 38.9
     },
     {
       "country": "DE",
-      "orders": 7,
-      "share": 14.6
+      "orders": 6,
+      "share": 16.7
     },
     {
       "country": "GB",
-      "orders": 4,
+      "orders": 3,
       "share": 8.3
     },
     {
       "country": "NL",
-      "orders": 3,
-      "share": 6.3
+      "orders": 2,
+      "share": 5.6
     },
     {
       "country": "IT",
       "orders": 2,
-      "share": 4.2
+      "share": 5.6
     },
     {
-      "country": "PL",
-      "orders": 2,
-      "share": 4.2
+      "country": "AE",
+      "orders": 1,
+      "share": 2.8
     },
     {
-      "country": "Other (9)",
-      "orders": 10,
-      "share": 20.8
+      "country": "Other (8)",
+      "orders": 8,
+      "share": 22.2
     }
   ]
 };
 
-const shopifyPrev = {"summary":{"totalOrders":38,"totalRevenue":15658.85,"averageOrderValue":412.07}};
+const shopifyPrev = {"summary":{"totalOrders":35,"totalRevenue":13227.33,"averageOrderValue":377.92}};
 
 const gsc = {
   "totals": {
-    "clicks": 979,
-    "impressions": 6526
+    "clicks": 962,
+    "impressions": 6995
   },
   "keywords": [
     {
       "keyword": "emisil",
-      "clicks": 463,
-      "impressions": 606,
-      "ctr": 76.4,
-      "position": 1.03
-    },
-    {
-      "keyword": "emisil prosthetics",
-      "clicks": 74,
-      "impressions": 86,
-      "ctr": 86.05,
-      "position": 1
+      "clicks": 443,
+      "impressions": 590,
+      "ctr": 75.08,
+      "position": 1.3
     },
     {
       "keyword": "ftm packer",
-      "clicks": 62,
-      "impressions": 1007,
-      "ctr": 6.16,
-      "position": 8.54
+      "clicks": 79,
+      "impressions": 1835,
+      "ctr": 4.31,
+      "position": 8.19
+    },
+    {
+      "keyword": "emisil prosthetics",
+      "clicks": 75,
+      "impressions": 88,
+      "ctr": 85.23,
+      "position": 1
+    },
+    {
+      "keyword": "ftm packers",
+      "clicks": 39,
+      "impressions": 420,
+      "ctr": 9.29,
+      "position": 7.3
     },
     {
       "keyword": "ftm sex toys",
-      "clicks": 44,
-      "impressions": 317,
-      "ctr": 13.88,
-      "position": 4.6
-    },
-    {
-      "keyword": "packer ftm",
-      "clicks": 35,
-      "impressions": 435,
-      "ctr": 8.05,
-      "position": 9.52
+      "clicks": 39,
+      "impressions": 295,
+      "ctr": 13.22,
+      "position": 4.5
     },
     {
       "keyword": "ftm bottom growth",
-      "clicks": 34,
-      "impressions": 575,
-      "ctr": 5.91,
-      "position": 4.49
-    },
-    {
-      "keyword": "prosthetic penis",
       "clicks": 32,
-      "impressions": 619,
-      "ctr": 5.17,
-      "position": 4.98
+      "impressions": 622,
+      "ctr": 5.14,
+      "position": 5.57
     },
     {
       "keyword": "emisil stp",
@@ -777,93 +795,100 @@ const gsc = {
       "position": 1
     },
     {
-      "keyword": "ftm packers",
+      "keyword": "packer ftm",
       "clicks": 27,
-      "impressions": 375,
-      "ctr": 7.2,
-      "position": 8.96
+      "impressions": 464,
+      "ctr": 5.82,
+      "position": 7.98
     },
     {
-      "keyword": "t dick",
-      "clicks": 21,
-      "impressions": 948,
-      "ctr": 2.22,
-      "position": 4.69
-    },
-    {
-      "keyword": "ftm bottom growth stages",
-      "clicks": 19,
-      "impressions": 120,
-      "ctr": 15.83,
-      "position": 2.26
-    },
-    {
-      "keyword": "pack and play ftm",
-      "clicks": 19,
-      "impressions": 137,
-      "ctr": 13.87,
-      "position": 5.67
+      "keyword": "prosthetic penis",
+      "clicks": 26,
+      "impressions": 444,
+      "ctr": 5.86,
+      "position": 5.21
     },
     {
       "keyword": "ftm pack and play",
-      "clicks": 17,
-      "impressions": 296,
-      "ctr": 5.74,
-      "position": 9.22
+      "clicks": 20,
+      "impressions": 298,
+      "ctr": 6.71,
+      "position": 9.09
+    },
+    {
+      "keyword": "packers ftm",
+      "clicks": 19,
+      "impressions": 252,
+      "ctr": 7.54,
+      "position": 7.37
     },
     {
       "keyword": "ftm prosthetics",
       "clicks": 17,
-      "impressions": 115,
-      "ctr": 14.78,
-      "position": 6.5
+      "impressions": 106,
+      "ctr": 16.04,
+      "position": 5.82
     },
     {
-      "keyword": "ftm stp",
+      "keyword": "pack and play ftm",
       "clicks": 17,
-      "impressions": 152,
-      "ctr": 11.18,
-      "position": 9.2
-    },
-    {
-      "keyword": "emisil er05",
-      "clicks": 15,
-      "impressions": 30,
-      "ctr": 50,
-      "position": 1
-    },
-    {
-      "keyword": "packer trans",
-      "clicks": 15,
-      "impressions": 457,
-      "ctr": 3.28,
-      "position": 10.01
-    },
-    {
-      "keyword": "emisil packer",
-      "clicks": 14,
-      "impressions": 23,
-      "ctr": 60.87,
-      "position": 1
+      "impressions": 136,
+      "ctr": 12.5,
+      "position": 5.72
     },
     {
       "keyword": "ftm prosthetic",
-      "clicks": 13,
-      "impressions": 133,
-      "ctr": 9.77,
-      "position": 6.68
+      "clicks": 16,
+      "impressions": 131,
+      "ctr": 12.21,
+      "position": 6.52
     },
     {
-      "keyword": "realistic packers ftm",
-      "clicks": 11,
-      "impressions": 55,
-      "ctr": 20,
-      "position": 8.25
+      "keyword": "ftm stp",
+      "clicks": 16,
+      "impressions": 156,
+      "ctr": 10.26,
+      "position": 8.43
+    },
+    {
+      "keyword": "emisil packer",
+      "clicks": 15,
+      "impressions": 26,
+      "ctr": 57.69,
+      "position": 1
+    },
+    {
+      "keyword": "t dick",
+      "clicks": 14,
+      "impressions": 846,
+      "ctr": 1.65,
+      "position": 4.8
+    },
+    {
+      "keyword": "ftm bottom growth stages",
+      "clicks": 13,
+      "impressions": 118,
+      "ctr": 11.02,
+      "position": 2.85
+    },
+    {
+      "keyword": "ftm prosthetic realistic",
+      "clicks": 13,
+      "impressions": 31,
+      "ctr": 41.94,
+      "position": 4.29
+    },
+    {
+      "keyword": "realistic penis sleeve",
+      "clicks": 12,
+      "impressions": 97,
+      "ctr": 12.37,
+      "position": 15.7
     }
   ]
 };
 
-const gscPrev = {"totals":{"clicks":833,"impressions":6085}};
+const gscPrev = {"totals":{"clicks":888,"impressions":6307}};
 // ═══════════════════════════════════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════════════════════════════════
@@ -1153,6 +1178,87 @@ const gscHtml = `<thead><tr><th>#</th><th>Keyword</th><th>Clicks</th><th>Impress
     </tr>`;
   }).join('')+'</tbody>';
 document.getElementById('gscTable').innerHTML=gscHtml;
+
+// ═══════════════════════════════════════════════════════════════
+// SEO PERFORMANCE KPIs
+// ═══════════════════════════════════════════════════════════════
+const seoKpis = [
+  {label:'Total Clicks',value:fmt(seo.current.clicks),delta:pctStr(seo.current.clicks,seo.previous.clicks),cls:deltaClass(seo.current.clicks,seo.previous.clicks),c:'purple'},
+  {label:'Impressions',value:fmt(seo.current.impressions),delta:pctStr(seo.current.impressions,seo.previous.impressions),cls:deltaClass(seo.current.impressions,seo.previous.impressions),c:'blue'},
+  {label:'Avg CTR',value:seo.current.ctr.toFixed(2)+'%',delta:((seo.current.ctr-seo.previous.ctr)>=0?'+':'')+((seo.current.ctr-seo.previous.ctr).toFixed(2))+'pp',cls:deltaClass(seo.current.ctr,seo.previous.ctr),c:'cyan'},
+  {label:'Avg Position',value:seo.current.position.toFixed(1),delta:((seo.previous.position-seo.current.position)>=0?'+':'')+((seo.previous.position-seo.current.position).toFixed(2)),cls:deltaClass(seo.previous.position,seo.current.position),c:'orange'},
+];
+document.getElementById('seoKpis').innerHTML = seoKpis.map(k=>
+  `<div class="kpi ${k.c}"><div class="label">${k.label}</div><div class="value">${k.value}</div><div class="delta ${k.cls}">${k.delta}</div></div>`
+).join('') + '<div style="grid-column:1/-1;font-size:.7rem;color:var(--muted);padding:4px 0">30-day period: Jan 22 – Feb 20 vs Dec 23 – Jan 21. Clicks/impressions down partly due to incomplete recent GSC data.</div>';
+
+// ═══════════════════════════════════════════════════════════════
+// SEO BLOG POSTS TABLE
+// ═══════════════════════════════════════════════════════════════
+const maxBlogClicks = seo.topBlogPosts[0].clicks;
+const blogHtml = `<thead><tr><th>#</th><th>Blog Post</th><th>Clicks</th><th></th><th>Impr</th><th>CTR</th><th>Pos</th><th>vs Prev</th></tr></thead><tbody>`+
+  seo.topBlogPosts.map((p,i)=>{
+    const slug = p.url.split('/').pop().replace(/-/g,' ');
+    const name = slug.length>50 ? slug.slice(0,50)+'\u2026' : slug;
+    const clickChg = pctStr(p.clicks,p.prevClicks);
+    const clickCls = deltaClass(p.clicks,p.prevClicks);
+    let posCls='pos-low';
+    if(p.position<=1.5)posCls='pos-1';else if(p.position<=5)posCls='pos-top5';else if(p.position<=10)posCls='pos-top10';
+    return `<tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td><div style="font-weight:500;margin-bottom:2px;text-transform:capitalize">${name}</div><div class="page-path">${p.url}</div></td>
+      <td style="font-weight:600">${fmt(p.clicks)}</td>
+      <td style="width:80px"><div class="bar-bg"><div class="bar-fill purple" style="width:${(p.clicks/maxBlogClicks*100).toFixed(0)}%"></div></div></td>
+      <td>${fmt(p.impressions)}</td>
+      <td>${p.ctr.toFixed(1)}%</td>
+      <td><span class="pos-badge ${posCls}">${p.position.toFixed(1)}</span></td>
+      <td><span class="delta ${clickCls}">${clickChg}</span></td>
+    </tr>`;
+  }).join('')+'</tbody>';
+document.getElementById('seoBlogTable').innerHTML=blogHtml;
+
+// ═══════════════════════════════════════════════════════════════
+// SEO QUERIES TABLE
+// ═══════════════════════════════════════════════════════════════
+const seoQHtml = `<thead><tr><th>#</th><th>Query</th><th>Clicks</th><th>Impressions</th><th>CTR</th><th>Position</th></tr></thead><tbody>`+
+  seo.topQueries.map((k,i)=>{
+    let posCls='pos-low';
+    if(k.position<=1.5)posCls='pos-1';else if(k.position<=5)posCls='pos-top5';else if(k.position<=10)posCls='pos-top10';
+    const isBrand=k.query.includes('emisil');
+    return `<tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td style="font-weight:${isBrand?'600':'400'};${isBrand?'color:#22c55e':''}">${k.query}</td>
+      <td style="font-weight:600">${k.clicks}</td>
+      <td>${fmt(k.impressions)}</td>
+      <td>${k.ctr.toFixed(1)}%</td>
+      <td><span class="pos-badge ${posCls}">${k.position.toFixed(1)}</span></td>
+    </tr>`;
+  }).join('')+'</tbody>';
+document.getElementById('seoQueryTable').innerHTML=seoQHtml;
+
+// ═══════════════════════════════════════════════════════════════
+// POSITION CHANGE ALERTS
+// ═══════════════════════════════════════════════════════════════
+let alertsHtml = '';
+alertsHtml += '<div style="margin-bottom:16px"><div style="font-size:.78rem;font-weight:600;color:var(--down);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">\u25BC Dropped</div>';
+seo.positionAlerts.dropped.forEach(p => {
+  const name = p.page.split('/').pop().replace(/-/g,' ');
+  alertsHtml += `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;margin-bottom:4px;background:rgba(239,68,68,.06);border-radius:8px;border-left:3px solid var(--down)">
+    <div style="min-width:0"><div style="font-size:.78rem;font-weight:500;text-transform:capitalize;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${name}</div><div class="page-path">${p.page}</div></div>
+    <div style="text-align:right;flex-shrink:0;margin-left:12px"><span style="color:var(--down);font-weight:700;font-size:.85rem">${p.prevPos.toFixed(1)} \u2192 ${p.curPos.toFixed(1)}</span><div style="font-size:.7rem;color:var(--muted)">+${p.change.toFixed(1)} pos</div></div>
+  </div>`;
+});
+alertsHtml += '</div>';
+alertsHtml += '<div><div style="font-size:.78rem;font-weight:600;color:var(--up);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">\u25B2 Improved</div>';
+seo.positionAlerts.improved.forEach(p => {
+  const name = p.page.split('/').pop().replace(/-/g,' ');
+  alertsHtml += `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;margin-bottom:4px;background:rgba(34,197,94,.06);border-radius:8px;border-left:3px solid var(--up)">
+    <div style="min-width:0"><div style="font-size:.78rem;font-weight:500;text-transform:capitalize;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${name}</div><div class="page-path">${p.page}</div></div>
+    <div style="text-align:right;flex-shrink:0;margin-left:12px"><span style="color:var(--up);font-weight:700;font-size:.85rem">${p.prevPos.toFixed(1)} \u2192 ${p.curPos.toFixed(1)}</span><div style="font-size:.7rem;color:var(--muted)">${p.change.toFixed(1)} pos</div></div>
+  </div>`;
+});
+alertsHtml += '</div>';
+document.getElementById('positionAlerts').innerHTML = alertsHtml;
 </script>
 </body>
 </html>
