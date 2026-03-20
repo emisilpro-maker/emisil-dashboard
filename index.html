@@ -334,6 +334,47 @@ tr:hover td{background:rgba(255,255,255,.02)}
   <div id="positionAlerts"></div>
 </div>
 
+<!-- ════════════════════════ SEO AUDIT ════════════════════════ -->
+<div class="section-title">
+  <span class="dot" style="background:var(--accent-orange)"></span>
+  SEO Audit
+  <span class="tag" id="auditDate">Weekly Audit</span>
+</div>
+
+<div class="kpi-grid" id="auditLighthouse"></div>
+
+<div style="display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-top:12px">
+  <div class="chart-card">
+    <h3>Pages Growing (daily clicks)</h3>
+    <div class="chart-wrap"><canvas id="auditGrowingChart"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <h3>Pages Declining (daily clicks)</h3>
+    <div class="chart-wrap"><canvas id="auditDecliningChart"></canvas></div>
+  </div>
+</div>
+
+<div style="display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-top:12px">
+  <div class="table-card">
+    <h3>Keywords Improved (Position)</h3>
+    <table id="auditKwImproved"></table>
+  </div>
+  <div class="table-card">
+    <h3>New Keywords in Top 30</h3>
+    <table id="auditKwNew"></table>
+  </div>
+</div>
+
+<div class="table-card" style="margin-top:12px">
+  <h3>Technical Issues</h3>
+  <div id="auditIssues"></div>
+</div>
+
+<div class="table-card">
+  <h3>Prioritized Actions</h3>
+  <div id="auditActions"></div>
+</div>
+
 <div class="footer">
   Emisil Nerve Center &middot; Data sources: GA4, Shopify, Google Search Console &middot; Auto-generated
 </div>
@@ -1505,6 +1546,143 @@ seo.positionAlerts.improved.forEach(p => {
 });
 alertsHtml += '</div>';
 document.getElementById('positionAlerts').innerHTML = alertsHtml;
+
+// ═══════════════════════════════════════════════════════════════
+// SEO AUDIT DATA
+// ═══════════════════════════════════════════════════════════════
+const seoAudit = {
+  "date": "2026-03-20",
+  "lighthouse": {"performance":95,"accessibility":96,"bestPractices":78,"seo":100},
+  "cwv": {"LCP":"1.32s","FCP":"0.76s","CLS":"0.01","TTFB":"19ms"},
+  "trend": {
+    "p1Label": "Feb 20 – Mar 5",
+    "p2Label": "Mar 6 – Mar 18",
+    "growing": [
+      {"page":"Best STP Packers","p1":19.4,"p2":36.1,"pct":86},
+      {"page":"2nd Gen STP Product","p1":7.4,"p2":16.8,"pct":127},
+      {"page":"FTM Transition Blog","p1":42.5,"p2":62.6,"pct":47},
+      {"page":"FTM Sex Toys Blog","p1":22.9,"p2":28.8,"pct":26},
+      {"page":"Realistic Sleeve Blog","p1":8.0,"p2":11.3,"pct":41},
+      {"page":"FTM STP Collection","p1":17.1,"p2":19.5,"pct":14},
+      {"page":"Penis Sleeves","p1":16.0,"p2":19.9,"pct":25}
+    ],
+    "declining": [
+      {"page":"Homepage","p1":164.9,"p2":113.1,"pct":-31},
+      {"page":"FTM Packers Collection","p1":20.6,"p2":11.8,"pct":-43},
+      {"page":"Pack & Play Collection","p1":10.0,"p2":7.2,"pct":-28}
+    ],
+    "kwImproved": [
+      {"kw":"emisil prosthetics","p1":3.8,"p2":1.0},
+      {"kw":"emisil packer","p1":1.4,"p2":1.0},
+      {"kw":"ftm stp","p1":6.9,"p2":5.5},
+      {"kw":"stp ftm","p1":6.5,"p2":5.4},
+      {"kw":"t dick","p1":4.0,"p2":3.6},
+      {"kw":"ftm bottom growth","p1":6.4,"p2":5.9},
+      {"kw":"ftm bottom growth stages","p1":3.1,"p2":2.7}
+    ],
+    "kwNew": [
+      {"kw":"diy packer ftm","clicks":12,"pos":3.7},
+      {"kw":"stp for trans men","clicks":12,"pos":5.9},
+      {"kw":"ftm stp prosthetics","clicks":13,"pos":6.0},
+      {"kw":"penis sleeves","clicks":17,"pos":20.9}
+    ]
+  },
+  "issues": [
+    {"severity":"MEDIUM","title":"Duplicate H3 headings on product cards","action":"Hide duplicate with aria-hidden"},
+    {"severity":"MEDIUM","title":"Lighthouse Best Practices 78/100","action":"Audit 3rd party scripts"},
+    {"severity":"LOW","title":"Legacy HTTP sitemap in GSC (5 warnings)","action":"Remove from Google Search Console"},
+    {"severity":"LOW","title":"Low text-to-code ratio on homepage (0.8%)","action":"Shopify app bloat — low priority"}
+  ],
+  "actions": [
+    {"p":1,"text":"MONITOR homepage & FTM Packers collection decline — don\u2019t change yet","impact":"High","effort":"None"},
+    {"p":2,"text":"Optimize CTR on FTM Transition blog (77K impr, 1.9% CTR)","impact":"High","effort":"Low"},
+    {"p":3,"text":"Remove legacy HTTP sitemap from GSC","impact":"Low","effort":"Low"},
+    {"p":4,"text":"Fix duplicate H3 headings in product card template","impact":"Medium","effort":"Low"},
+    {"p":5,"text":"Create Emisil vs X competitor comparison pages","impact":"High","effort":"High"}
+  ]
+};
+
+// ═══════════════════════════════════════════════════════════════
+// SEO AUDIT RENDERING
+// ═══════════════════════════════════════════════════════════════
+document.getElementById('auditDate').textContent = seoAudit.date;
+
+// Lighthouse KPIs
+const lhColors = {performance:'green',accessibility:'blue',bestPractices:'orange',seo:'purple'};
+const lhLabels = {performance:'Performance',accessibility:'Accessibility',bestPractices:'Best Practices',seo:'SEO'};
+let lhHtml = '';
+Object.keys(seoAudit.lighthouse).forEach(k => {
+  const v = seoAudit.lighthouse[k];
+  const col = lhColors[k];
+  const cls = v >= 90 ? 'up' : v >= 50 ? 'neutral' : 'down';
+  lhHtml += `<div class="kpi ${col}"><div class="label">${lhLabels[k]}</div><div class="value">${v}/100</div><div class="delta ${cls}">${v>=90?'Good':v>=50?'Needs Work':'Poor'}</div></div>`;
+});
+// CWV KPIs
+Object.keys(seoAudit.cwv).forEach(k => {
+  lhHtml += `<div class="kpi cyan"><div class="label">${k}</div><div class="value">${seoAudit.cwv[k]}</div><div class="delta up">Pass</div></div>`;
+});
+document.getElementById('auditLighthouse').innerHTML = lhHtml;
+
+// Growing pages chart
+new Chart(document.getElementById('auditGrowingChart'),{
+  type:'bar',
+  data:{
+    labels: seoAudit.trend.growing.map(p=>p.page),
+    datasets:[
+      {label:seoAudit.trend.p1Label,data:seoAudit.trend.growing.map(p=>p.p1),backgroundColor:'rgba(139,143,163,0.6)'},
+      {label:seoAudit.trend.p2Label,data:seoAudit.trend.growing.map(p=>p.p2),backgroundColor:'rgba(34,197,94,0.7)'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{labels:{color:'#8b8fa3',font:{size:10}}}},scales:{x:{ticks:{color:'#8b8fa3'},grid:{color:'rgba(42,45,58,0.5)'}},y:{ticks:{color:'#e1e4ed',font:{size:10}},grid:{display:false}}}}
+});
+
+// Declining pages chart
+new Chart(document.getElementById('auditDecliningChart'),{
+  type:'bar',
+  data:{
+    labels: seoAudit.trend.declining.map(p=>p.page),
+    datasets:[
+      {label:seoAudit.trend.p1Label,data:seoAudit.trend.declining.map(p=>p.p1),backgroundColor:'rgba(139,143,163,0.6)'},
+      {label:seoAudit.trend.p2Label,data:seoAudit.trend.declining.map(p=>p.p2),backgroundColor:'rgba(239,68,68,0.7)'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{labels:{color:'#8b8fa3',font:{size:10}}}},scales:{x:{ticks:{color:'#8b8fa3'},grid:{color:'rgba(42,45,58,0.5)'}},y:{ticks:{color:'#e1e4ed',font:{size:10}},grid:{display:false}}}}
+});
+
+// Keywords improved table
+document.getElementById('auditKwImproved').innerHTML = '<thead><tr><th>Keyword</th><th>Before</th><th>After</th><th>Change</th></tr></thead><tbody>' +
+  seoAudit.trend.kwImproved.map(k => {
+    const chg = (k.p1 - k.p2).toFixed(1);
+    return `<tr><td style="font-weight:500">${k.kw}</td><td>${k.p1.toFixed(1)}</td><td style="font-weight:600">${k.p2.toFixed(1)}</td><td style="color:var(--up)">+${chg}</td></tr>`;
+  }).join('') + '</tbody>';
+
+// New keywords table
+document.getElementById('auditKwNew').innerHTML = '<thead><tr><th>Keyword</th><th>Clicks</th><th>Position</th></tr></thead><tbody>' +
+  seoAudit.trend.kwNew.map(k => {
+    let posCls='pos-low';
+    if(k.pos<=1.5)posCls='pos-1';else if(k.pos<=5)posCls='pos-top5';else if(k.pos<=10)posCls='pos-top10';
+    return `<tr><td style="font-weight:500">${k.kw}</td><td style="font-weight:600">${k.clicks}</td><td><span class="pos-badge ${posCls}">${k.pos.toFixed(1)}</span></td></tr>`;
+  }).join('') + '</tbody>';
+
+// Technical issues
+const sevColors = {CRITICAL:'var(--down)',HIGH:'var(--accent-orange)',MEDIUM:'var(--accent-orange)',LOW:'var(--muted)'};
+document.getElementById('auditIssues').innerHTML = seoAudit.issues.map(i =>
+  `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;margin-bottom:4px;background:var(--card);border-radius:8px;border-left:3px solid ${sevColors[i.severity]}">
+    <div><span style="font-size:.7rem;font-weight:600;color:${sevColors[i.severity]};text-transform:uppercase;margin-right:8px">${i.severity}</span><span style="font-size:.78rem;font-weight:500">${i.title}</span></div>
+    <div style="font-size:.7rem;color:var(--muted);text-align:right;max-width:40%">${i.action}</div>
+  </div>`
+).join('');
+
+// Prioritized actions
+document.getElementById('auditActions').innerHTML = seoAudit.actions.map(a => {
+  const impactColor = a.impact==='High'?'var(--accent-orange)':a.impact==='Medium'?'var(--accent-cyan)':'var(--muted)';
+  return `<div style="display:flex;align-items:center;gap:10px;padding:10px;margin-bottom:4px;background:var(--card);border-radius:8px;border-left:3px solid ${impactColor}">
+    <span style="font-size:1rem;font-weight:700;color:var(--muted);min-width:20px">#${a.p}</span>
+    <div style="flex:1;font-size:.8rem">${a.text}</div>
+    <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;border:1px solid var(--border);color:${impactColor};white-space:nowrap">${a.impact} impact</span>
+    <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;border:1px solid var(--border);color:var(--muted);white-space:nowrap">${a.effort} effort</span>
+  </div>`;
+}).join('');
 </script>
 </body>
 </html>
